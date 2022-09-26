@@ -86,15 +86,6 @@ public class BookList
                 return Filtered;
 
 
-                /*foreach (Book item in Books)
-                {
-                    if (Status == Value)
-                    {
-                        Console.Write($"{item}:{Books(item)}");
-                        Console.WriteLine(item.BookDetailShort());
-
-                    }
-                }*/
         }
 
     }

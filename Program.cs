@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Linq;
+using System.Reflection;
+using static System.Reflection.Metadata.BlobBuilder;
 
 class Program
 {
@@ -20,14 +23,14 @@ class Program
 
             }
         };
-
+        Console.WriteLine("\nWelcome to Console Library\n");
         Menu(AllBooks);
     }
 
     static void Menu(BookList AllBooks)
     {
-        Console.WriteLine("\nWelcome to Console Library\n");
-        Console.WriteLine("Your number of Choice:");
+        
+        Console.WriteLine("\nYour number of Choice:\n");
         Console.WriteLine("0 for display list of all books");
         Console.WriteLine("1 for borrow book");
         Console.WriteLine("2 for book return");
@@ -90,24 +93,89 @@ class Program
                 break;
             case "3":
                 Console.WriteLine("Book search service");
-                Console.WriteLine("Search by title press 0, by author 1, by ISBN 2, by release year 3");
-                Console.WriteLine("by publisher 4, by genre 5, by status 6");
-                string an3 = GetInput(new List<string> { "0", "1", "2", "3", "4", "5", "6" });
+                Console.WriteLine("Search by title press 0, by author 1, by ISBN 2");
+                Console.WriteLine("by year of release 3, publisher 4, by genre 5");
+                string an3 = GetInput(new List<string> { "0", "1", "2", "3", "4", "5" });
                 switch (an3)
                 {
                     case "0":
+                        Console.WriteLine("Choose book by title, here some examples: ");
+                        List<string> option0 = new List<string>();
+                        foreach (Book item in AllBooks.Books)
+                        {
+                            Console.Write(" " + item.Title + " ");
+                            option0.Add(item.Title);
+                        }
+                        Console.WriteLine("\nType book title:");
+                        string ans0 = GetInput(option0);
+                        Console.WriteLine(AllBooks.Filter($"Title", ans0).Books[0].BookDetails());
+                        Menu(AllBooks);
+
+                        break;
+                    case "1":
+                        Console.WriteLine("Choose book by author, here some examples: ");
+                        List<string> option1 = new List<string>();
+                        foreach (Book item in AllBooks.Books)
+                        {
+                            Console.Write(" " + item.Author + " ");
+                            option1.Add(item.Author);
+                        }
+                        Console.WriteLine("\nType book author:");
+                        string ans1 = GetInput(option1);
+                        Console.WriteLine(AllBooks.Filter($"Author", ans1).Books[0].BookDetails());
+                        Menu(AllBooks);
+                        break;
+                    case "2":
+                        Console.WriteLine("Choose book by ISBN, here some examples: ");
+                        List<string> option2 = new List<string>();
                         foreach (Book item in AllBooks.Books)
                         {
                             Console.Write(" " + item.Isbn + " ");
+                            option2.Add(item.Isbn);
                         }
-                        break;
-                    case "1":
-                        break;
-                    case "2":
+                        Console.WriteLine("\nType book ISBN:");
+                        string ans2 = GetInput(option2);
+                        Console.WriteLine(AllBooks.Filter($"Isbn", ans2).Books[0].BookDetails());
+                        Menu(AllBooks);
                         break;
                     case "3":
+                        Console.WriteLine("Choose book by year of release, here some examples: ");
+                        List<string> option3 = new List<string>();
+                        foreach (Book item in AllBooks.Books)
+                        {
+                            Console.Write(" " + item.Release + " ");
+                            option3.Add(item.Release);
+                        }
+                        Console.WriteLine("\nType book year of release:");
+                        string ans3 = GetInput(option3);
+                        Console.WriteLine(AllBooks.Filter($"Release", ans3).Books[0].BookDetails());
+                        Menu(AllBooks);
                         break;
                     case "4":
+                        Console.WriteLine("Choose book by publisher, here some examples: ");
+                        List<string> option4 = new List<string>();
+                        foreach (Book item in AllBooks.Books)
+                        {
+                            Console.Write(" " + item.Publisher + " ");
+                            option4.Add(item.Publisher);
+                        }
+                        Console.WriteLine("\nType book publisher:");
+                        string ans4 = GetInput(option4);
+                        Console.WriteLine(AllBooks.Filter($"Publisher", ans4).Books[0].BookDetails());
+                        Menu(AllBooks);
+                        break;
+                    case "5":
+                        Console.WriteLine("Choose book by genre, here some examples: ");
+                        List<string> option5 = new List<string>();
+                        foreach (Book item in AllBooks.Books)
+                        {
+                            Console.Write(" " + item.Genre + " ");
+                            option5.Add(item.Genre);
+                        }
+                        Console.WriteLine("\nType book genre:");
+                        string ans5 = GetInput(option5);
+                        Console.WriteLine(AllBooks.Filter($"Genre", ans5).Books[0].BookDetails());
+                        Menu(AllBooks);
                         break;
 
                 }
@@ -127,7 +195,7 @@ class Program
                 }
                 else
                 {
-                    Console.WriteLine("try to retype proper number");
+                    Console.WriteLine("try to retype proper value");
                 }
 
             }

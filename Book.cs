@@ -21,4 +21,8 @@ public class Book
     {
         return String.Format(" {0}; {1}; {2}", Title, Author, Genre);
     }
+    public string BookDetails()
+    {
+        return String.Format("{0}; {1}; {2}; {3}; {4}; {5}", Title, Author, Isbn, Publisher, Release, Genre);
+    }
 }
