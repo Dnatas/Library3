@@ -19,7 +19,7 @@ class Program
                 new Book() { Title = "Įžymūs lietuviai", Author = "Rokas Subačius", Isbn = "9785417011269", Release = "2022", Publisher = "Mintis", Genre = "biografija", Status = "Available" },
                 new Book() { Title = "Kiborgų žemė", Author = "Dovydas Pancerovas", Isbn = "9786090150894", Release = "2022", Publisher = "Alma littera", Genre = "karo istorija", Status = "Available" },
                 new Book() { Title = "Vieno žmogaus bohema", Author = "Ugnė Barauskaitė", Isbn = "9786094661563", Release = "2016", Publisher = "Tyto alba", Genre = "grožinė literatūra", Status = "Borrowed" },
-                new Book() { Title = "Basic of fluid mechanics", Author = "Tadas Ždankus", Isbn = "9786090211078", Release = "2020", Publisher = "Technologija", Genre = "fizika", Status = "Available" }
+                new Book() { Title = "Basic of fluid mechanics", Author = "Tadas Ždankus", Isbn = "9786090211078", Release = "2020", Publisher = "Technologija", Genre = "fizika", Status = "Return" }
 
             }
         };
@@ -35,9 +35,10 @@ class Program
         Console.WriteLine("1 for borrow book");
         Console.WriteLine("2 for book return");
         Console.WriteLine("3 for book search");
+        Console.WriteLine("8 for Admin");
         Console.WriteLine("9 for exit\n");
 
-        string chc = GetInput(new List<string>() { "0", "1", "2", "3", "9" });
+        string chc = GetInput(new List<string>() { "0", "1", "2", "3", "8", "9" });
         switch (chc)
         {
             case "0":
@@ -84,12 +85,6 @@ class Program
                         continue;
                     }
                 }
-
-                //int an2 = int.Parse(GetInput(new List<string> { "0", "1", "2", "3" }));
-                //bookshelf[an2].ChangeStatus("Returning");
-                //Console.WriteLine("Thank you for returning the book:");
-                Menu(AllBooks);
-                //Console.WriteLine(AllBooks.Books[2].BookDetailSingle(an2));
                 break;
             case "3":
                 Console.WriteLine("Book search service");
@@ -180,6 +175,31 @@ class Program
 
                 }
                 break;
+            case "8":
+                Console.WriteLine("Welcome back, Admin");
+                Console.WriteLine("type Admin password");
+                GetInput(new List<string> { "admin", "Admin"});
+                Console.WriteLine("successfully joined");
+
+                Console.WriteLine("\nReturning books arrived:");
+                AllBooks.Filter("Status", "Return").ListAll();
+                Console.WriteLine("Choose book by book number");
+                while (true)
+                {
+                    int an8 = int.Parse(Console.ReadLine());
+                    if (AllBooks.Filter("Status", "Return").Books.ElementAtOrDefault(an8) != null)
+                    {
+                        Console.WriteLine("Check local delivery for the book:");
+                        Console.WriteLine(AllBooks.Filter("Status", "Return").Books[an8].BookDetailBasic());
+                        AllBooks.Filter("Status", "Return").Books[an8].ChangeStatus("Available");
+                        Menu(AllBooks);
+                    }
+                    else
+                    {
+                        Console.WriteLine("That book is not in list, please retype");
+                        continue;
+                    }
+                }
             case "9":
                 Environment.Exit(0);
                 break;
@@ -204,7 +224,7 @@ class Program
     }
 }
 
-/*Attribute ž Talker ({"Titl;e","" <"",""})
-    valute ž readline;
+/*Attribute = Talker ({"Title","" <"",""})
+    value = readline;
 
-BookList.fileer (attribeu, value)*/
+BookList.filler (attribeu, value)*/
