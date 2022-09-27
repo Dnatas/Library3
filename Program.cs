@@ -29,6 +29,7 @@ class Program
 
     static void Menu(BookList AllBooks)
     {
+        string menuAnswer;
         
         Console.WriteLine("\nYour number of Choice:\n");
         Console.WriteLine("0 for display list of all books");
@@ -52,12 +53,12 @@ class Program
                 AllBooks.Filter("Status","Available").ListAll();
                 Console.WriteLine("Choose book by book number");
                     while (true) {
-                    int an1 = int.Parse(Console.ReadLine());
-                    if (AllBooks.Filter("Status", "Available").Books.ElementAtOrDefault(an1) != null)
+                    menuAnswer = Console.ReadLine();
+                    if (AllBooks.Filter("Status", "Available").Books.ElementAtOrDefault(int.Parse(menuAnswer)) != null)
                     {
                         Console.WriteLine("Check local delivery for the book:");
-                        Console.WriteLine(AllBooks.Filter("Status", "Available").Books[an1].BookDetailBasic());
-                        AllBooks.Filter("Status", "Available").Books[an1].ChangeStatus("Borrowed");
+                        Console.WriteLine(AllBooks.Filter("Status", "Available").Books[int.Parse(menuAnswer)].BookDetailBasic());
+                        AllBooks.Filter("Status", "Available").Books[int.Parse(menuAnswer)].ChangeStatus("Borrowed");
                         Menu(AllBooks);
                      }
                     else 
@@ -74,12 +75,12 @@ class Program
                 Console.WriteLine("Choose book by book number");
                 while (true)
                 {
-                    int an2 = int.Parse(Console.ReadLine());
-                    if (AllBooks.Filter("Status", "Borrowed").Books.ElementAtOrDefault(an2) != null)
+                    menuAnswer = Console.ReadLine();
+                    if (AllBooks.Filter("Status", "Borrowed").Books.ElementAtOrDefault(int.Parse(menuAnswer)) != null)
                     {
                         Console.WriteLine("Library Admin will available book on arriving:");
-                        Console.WriteLine(AllBooks.Filter("Status", "Borrowed").Books[an2].BookDetailBasic());
-                        AllBooks.Filter("Status", "Borrowed").Books[an2].ChangeStatus("Return");
+                        Console.WriteLine(AllBooks.Filter("Status", "Borrowed").Books[int.Parse(menuAnswer)].BookDetailBasic());
+                        AllBooks.Filter("Status", "Borrowed").Books[int.Parse(menuAnswer)].ChangeStatus("Return");
                         Menu(AllBooks);
                     }
                     else
@@ -95,12 +96,12 @@ class Program
                 Console.WriteLine("Choose book by book number");
                 while (true)
                 {
-                    int an1 = int.Parse(Console.ReadLine());
-                    if (AllBooks.Filter("Status", "Available").Books.ElementAtOrDefault(an1) != null)
+                    menuAnswer = Console.ReadLine();
+                    if (AllBooks.Filter("Status", "Available").Books.ElementAtOrDefault(int.Parse(menuAnswer)) != null)
                     {
                         Console.WriteLine("This book get reserved for you:");
-                        Console.WriteLine(AllBooks.Filter("Status", "Available").Books[an1].BookDetailBasic());
-                        AllBooks.Filter("Status", "Available").Books[an1].ChangeStatus("Reserved");
+                        Console.WriteLine(AllBooks.Filter("Status", "Available").Books[int.Parse(menuAnswer)].BookDetailBasic());
+                        AllBooks.Filter("Status", "Available").Books[int.Parse(menuAnswer)].ChangeStatus("Reserved");
                         Menu(AllBooks);
                     }
                     else
@@ -114,8 +115,8 @@ class Program
                 Console.WriteLine("Book search:");
                 Console.WriteLine("Search by title press 0, by author 1, by ISBN 2");
                 Console.WriteLine("by year of release 3, publisher 4, by genre 5");
-                string an3 = GetInput(new List<string> { "0", "1", "2", "3", "4", "5" });
-                switch (an3)
+                menuAnswer = GetInput(new List<string> { "0", "1", "2", "3", "4", "5" });
+                switch (menuAnswer)
                 {
                     case "0":
                         SearchBook(AllBooks, "Title");
@@ -138,10 +139,13 @@ class Program
 
                 }
                 break;
+
             case "8":
                 Console.WriteLine("Welcome back, Admin");
                 Console.WriteLine("type Admin password");
+
                 GetInput(new List<string> { "admin", "Admin"});
+
                 Console.Clear();
                 Console.WriteLine("successfully joined");
 
@@ -152,12 +156,13 @@ class Program
                 Console.WriteLine("Choose book by book number");
                 while (true)
                 {
-                    int an8 = int.Parse(Console.ReadLine());
-                    if (AllBooks.Filter("Status", "Return").Books.ElementAtOrDefault(an8) !=null)
+                    menuAnswer = (Console.ReadLine());
+
+                    if (AllBooks.Filter("Status", "Return").Books.ElementAtOrDefault(int.Parse(menuAnswer)) !=null)
                     {
                         Console.WriteLine("Check local delivery for the book:");
-                        Console.WriteLine(AllBooks.Filter("Status", "Return").Books[an8].BookDetailBasic());
-                        AllBooks.Filter("Status", "Return").Books[an8].ChangeStatus("Available");
+                        Console.WriteLine(AllBooks.Filter("Status", "Return").Books[int.Parse(menuAnswer)].BookDetailBasic());
+                        AllBooks.Filter("Status", "Return").Books[int.Parse(menuAnswer)].ChangeStatus("Available");
                         Menu(AllBooks);
                     }
                     else
@@ -166,6 +171,7 @@ class Program
                         continue;
                     }
                 }
+
             case "9":
                 Environment.Exit(0);
                 break;
@@ -205,9 +211,9 @@ class Program
             Console.Write($"{item.GetAttr(Category)} ");
         }
         Console.WriteLine($"\nType book {Category}:");
-        string ans = Console.ReadLine();
-        ListEmpty(AllBooks, AllBooks.Filter(Category, ans).Books);
-        AllBooks.Filter(Category, ans).ListAll();
+        string answer = Console.ReadLine();
+        ListEmpty(AllBooks, AllBooks.Filter(Category, answer).Books);
+        AllBooks.Filter(Category, answer).ListAll();
         Menu(AllBooks);
     }
 }
