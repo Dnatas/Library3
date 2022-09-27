@@ -7,8 +7,8 @@ public class BookList
     {
         foreach (Book item in Books)
         {
-            Console.Write($"{item}:{Books.IndexOf(item)}");
-            Console.WriteLine(item.BookDetailShort());
+            Console.Write($"{item}:{Books.IndexOf(item)} ");
+            Console.WriteLine(item.BookDetails());
 
         }
 

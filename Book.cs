@@ -25,4 +25,33 @@ public class Book
     {
         return String.Format("{0}; {1}; {2}; {3}; {4}; {5}", Title, Author, Isbn, Publisher, Release, Genre);
     }
+    public string GetAttr(string Category)
+    {
+        switch (Category)
+        {
+            case "Title":
+                //Category = Title;
+                return Title;
+                
+            case "Author":
+                //Category = Author;
+                return Author;
+            case "Isbn":
+                //Category = Isbn;
+                return Isbn;
+            case "Release":
+                //Category = Release;
+                return Release;
+            case "Publisher":
+                //Category = Publisher;
+                return Publisher;
+            case "Genre":
+                //Category = Genre;
+                return Genre;
+        }
+        return null;
+            
+
+
+    }
 }

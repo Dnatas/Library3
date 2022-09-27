@@ -46,6 +46,8 @@ class Program
                 Menu(AllBooks);
                 break;
             case "1":
+                
+                ListEmpty(AllBooks, AllBooks.Filter("Status", "Available").Books);
                 Console.WriteLine("\nBooks available:");
                 AllBooks.Filter("Status","Available").ListAll();
                 Console.WriteLine("Choose book by book number");
@@ -66,6 +68,7 @@ class Program
                 }
                 
             case "2":
+                ListEmpty(AllBooks, AllBooks.Filter("Status", "Borrowed").Books);
                 Console.WriteLine("Which book do you want to return?");
                 AllBooks.Filter("Status", "Borrowed").ListAll();
                 Console.WriteLine("Choose book by book number");
@@ -85,92 +88,30 @@ class Program
                         continue;
                     }
                 }
-                break;
             case "3":
-                Console.WriteLine("Book search service");
+                Console.WriteLine("Book search:");
                 Console.WriteLine("Search by title press 0, by author 1, by ISBN 2");
                 Console.WriteLine("by year of release 3, publisher 4, by genre 5");
                 string an3 = GetInput(new List<string> { "0", "1", "2", "3", "4", "5" });
                 switch (an3)
                 {
                     case "0":
-                        Console.WriteLine("Choose book by title, here some examples: ");
-                        List<string> option0 = new List<string>();
-                        foreach (Book item in AllBooks.Books)
-                        {
-                            Console.Write(" " + item.Title + " ");
-                            option0.Add(item.Title);
-                        }
-                        Console.WriteLine("\nType book title:");
-                        string ans0 = GetInput(option0);
-                        Console.WriteLine(AllBooks.Filter($"Title", ans0).Books[0].BookDetails());
-                        Menu(AllBooks);
-
+                        SearchBook(AllBooks, "Title");
                         break;
                     case "1":
-                        Console.WriteLine("Choose book by author, here some examples: ");
-                        List<string> option1 = new List<string>();
-                        foreach (Book item in AllBooks.Books)
-                        {
-                            Console.Write(" " + item.Author + " ");
-                            option1.Add(item.Author);
-                        }
-                        Console.WriteLine("\nType book author:");
-                        string ans1 = GetInput(option1);
-                        Console.WriteLine(AllBooks.Filter($"Author", ans1).Books[0].BookDetails());
-                        Menu(AllBooks);
+                        SearchBook(AllBooks, "Author");
                         break;
                     case "2":
-                        Console.WriteLine("Choose book by ISBN, here some examples: ");
-                        List<string> option2 = new List<string>();
-                        foreach (Book item in AllBooks.Books)
-                        {
-                            Console.Write(" " + item.Isbn + " ");
-                            option2.Add(item.Isbn);
-                        }
-                        Console.WriteLine("\nType book ISBN:");
-                        string ans2 = GetInput(option2);
-                        Console.WriteLine(AllBooks.Filter($"Isbn", ans2).Books[0].BookDetails());
-                        Menu(AllBooks);
+                        SearchBook(AllBooks,"Isbn");
                         break;
                     case "3":
-                        Console.WriteLine("Choose book by year of release, here some examples: ");
-                        List<string> option3 = new List<string>();
-                        foreach (Book item in AllBooks.Books)
-                        {
-                            Console.Write(" " + item.Release + " ");
-                            option3.Add(item.Release);
-                        }
-                        Console.WriteLine("\nType book year of release:");
-                        string ans3 = GetInput(option3);
-                        Console.WriteLine(AllBooks.Filter($"Release", ans3).Books[0].BookDetails());
-                        Menu(AllBooks);
+                        SearchBook(AllBooks, "Release");
                         break;
                     case "4":
-                        Console.WriteLine("Choose book by publisher, here some examples: ");
-                        List<string> option4 = new List<string>();
-                        foreach (Book item in AllBooks.Books)
-                        {
-                            Console.Write(" " + item.Publisher + " ");
-                            option4.Add(item.Publisher);
-                        }
-                        Console.WriteLine("\nType book publisher:");
-                        string ans4 = GetInput(option4);
-                        Console.WriteLine(AllBooks.Filter($"Publisher", ans4).Books[0].BookDetails());
-                        Menu(AllBooks);
+                        SearchBook(AllBooks, "Publisher");
                         break;
                     case "5":
-                        Console.WriteLine("Choose book by genre, here some examples: ");
-                        List<string> option5 = new List<string>();
-                        foreach (Book item in AllBooks.Books)
-                        {
-                            Console.Write(" " + item.Genre + " ");
-                            option5.Add(item.Genre);
-                        }
-                        Console.WriteLine("\nType book genre:");
-                        string ans5 = GetInput(option5);
-                        Console.WriteLine(AllBooks.Filter($"Genre", ans5).Books[0].BookDetails());
-                        Menu(AllBooks);
+                        SearchBook(AllBooks, "Genre");
                         break;
 
                 }
@@ -179,7 +120,10 @@ class Program
                 Console.WriteLine("Welcome back, Admin");
                 Console.WriteLine("type Admin password");
                 GetInput(new List<string> { "admin", "Admin"});
+                Console.Clear();
                 Console.WriteLine("successfully joined");
+
+                ListEmpty(AllBooks, AllBooks.Filter("Status", "Return").Books);
 
                 Console.WriteLine("\nReturning books arrived:");
                 AllBooks.Filter("Status", "Return").ListAll();
@@ -187,7 +131,7 @@ class Program
                 while (true)
                 {
                     int an8 = int.Parse(Console.ReadLine());
-                    if (AllBooks.Filter("Status", "Return").Books.ElementAtOrDefault(an8) != null)
+                    if (AllBooks.Filter("Status", "Return").Books.ElementAtOrDefault(an8) !=null)
                     {
                         Console.WriteLine("Check local delivery for the book:");
                         Console.WriteLine(AllBooks.Filter("Status", "Return").Books[an8].BookDetailBasic());
@@ -222,9 +166,27 @@ class Program
         }
 
     }
+    static void ListEmpty(BookList AllBooks,  List<Book> list)
+    {
+        if (list.Count == 0)
+        {
+        Console.WriteLine("\nThere no book lists to display");
+        Menu(AllBooks);
+        }
+    }
+
+    static void SearchBook(BookList AllBooks, string Category)
+    {
+        Console.WriteLine($"{Category} examples for testing: ");
+        foreach (Book item in AllBooks.Books)
+        {
+            Console.Write($"{item.GetAttr(Category)} ");
+        }
+        Console.WriteLine($"\nType book {Category}:");
+        string ans = Console.ReadLine();
+        ListEmpty(AllBooks, AllBooks.Filter(Category, ans).Books);
+        AllBooks.Filter(Category, ans).ListAll();
+        Menu(AllBooks);
+    }
 }
 
-/*Attribute = Talker ({"Title","" <"",""})
-    value = readline;
-
-BookList.filler (attribeu, value)*/
