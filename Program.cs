@@ -34,11 +34,12 @@ class Program
         Console.WriteLine("0 for display list of all books");
         Console.WriteLine("1 for borrow book");
         Console.WriteLine("2 for book return");
-        Console.WriteLine("3 for book search");
+        Console.WriteLine("3 for reserve a book");
+        Console.WriteLine("4 for book search");
         Console.WriteLine("8 for Admin");
         Console.WriteLine("9 for exit\n");
 
-        string chc = GetInput(new List<string>() { "0", "1", "2", "3", "8", "9" });
+        string chc = GetInput(new List<string>() { "0", "1", "2", "3", "4", "8", "9" });
         switch (chc)
         {
             case "0":
@@ -46,7 +47,6 @@ class Program
                 Menu(AllBooks);
                 break;
             case "1":
-                
                 ListEmpty(AllBooks, AllBooks.Filter("Status", "Available").Books);
                 Console.WriteLine("\nBooks available:");
                 AllBooks.Filter("Status","Available").ListAll();
@@ -89,6 +89,28 @@ class Program
                     }
                 }
             case "3":
+                ListEmpty(AllBooks, AllBooks.Filter("Status", "Available").Books);
+                Console.WriteLine("\nBooks available:");
+                AllBooks.Filter("Status", "Available").ListAll();
+                Console.WriteLine("Choose book by book number");
+                while (true)
+                {
+                    int an1 = int.Parse(Console.ReadLine());
+                    if (AllBooks.Filter("Status", "Available").Books.ElementAtOrDefault(an1) != null)
+                    {
+                        Console.WriteLine("This book get reserved for you:");
+                        Console.WriteLine(AllBooks.Filter("Status", "Available").Books[an1].BookDetailBasic());
+                        AllBooks.Filter("Status", "Available").Books[an1].ChangeStatus("Reserved");
+                        Menu(AllBooks);
+                    }
+                    else
+                    {
+                        Console.WriteLine("That book is not available, please retype");
+                        continue;
+                    }
+                }
+
+            case "4":
                 Console.WriteLine("Book search:");
                 Console.WriteLine("Search by title press 0, by author 1, by ISBN 2");
                 Console.WriteLine("by year of release 3, publisher 4, by genre 5");
