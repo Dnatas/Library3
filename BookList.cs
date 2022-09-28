@@ -9,7 +9,6 @@ public class BookList
         {
             Console.Write($"{item}:{Books.IndexOf(item)} ");
             Console.WriteLine(item.BookDetails());
-
         }
 
     }
@@ -27,6 +26,7 @@ public class BookList
                     }
                 }
                 return Filtered;
+
             case "Author":
                 foreach (Book item in Books)
                 {
@@ -36,6 +36,7 @@ public class BookList
                     }
                 }
                 return Filtered;
+
             case "Isbn":
                 foreach (Book item in Books)
                 {
@@ -45,6 +46,7 @@ public class BookList
                     }
                 }
                 return Filtered;
+
             case "Release":
                 foreach (Book item in Books)
                 {
@@ -54,6 +56,7 @@ public class BookList
                     }
                 }
                 return Filtered;
+
             case "Publisher":
                 foreach (Book item in Books)
                 {
@@ -63,6 +66,7 @@ public class BookList
                     }
                 }
                 return Filtered;
+
             case "Genre":
                 foreach (Book item in Books)
                 {
@@ -72,6 +76,7 @@ public class BookList
                     }
                 }
                 return Filtered;
+
             case "Status":
                 foreach (Book item in Books)
                 {

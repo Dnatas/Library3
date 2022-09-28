@@ -40,8 +40,8 @@ class Program
         Console.WriteLine("8 for Admin");
         Console.WriteLine("9 for exit\n");
 
-        string chc = GetInput(new List<string>() { "0", "1", "2", "3", "4", "8", "9" });
-        switch (chc)
+        string choice = GetInput(new List<string>() { "0", "1", "2", "3", "4", "8", "9" });
+        switch (choice)
         {
             case "0":
                 AllBooks.ListAll();
@@ -205,11 +205,6 @@ class Program
 
     static void SearchBook(BookList AllBooks, string Category)
     {
-        Console.WriteLine($"{Category} examples for testing: ");
-        foreach (Book item in AllBooks.Books)
-        {
-            Console.Write($"{item.GetAttr(Category)} ");
-        }
         Console.WriteLine($"\nType book {Category}:");
         string answer = Console.ReadLine();
         ListEmpty(AllBooks, AllBooks.Filter(Category, answer).Books);

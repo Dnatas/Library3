@@ -30,26 +30,24 @@ public class Book
         switch (Category)
         {
             case "Title":
-                //Category = Title;
                 return Title;
                 
             case "Author":
-                //Category = Author;
                 return Author;
+
             case "Isbn":
-                //Category = Isbn;
                 return Isbn;
+
             case "Release":
-                //Category = Release;
                 return Release;
+
             case "Publisher":
-                //Category = Publisher;
                 return Publisher;
+
             case "Genre":
-                //Category = Genre;
                 return Genre;
         }
-        return null;
+        return Category;
             
 
 
