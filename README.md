@@ -1,6 +1,6 @@
 # Library3
-######There 2 passwords for Admin, one is "password".
-######Search in program based on details of used books:
+####There 2 passwords for Admin, one is "password".
+####Search in program based on details of used books:
 
 Title Epoche, Author Nerijus Cibulskas, Isbn 9786094803345, Release 2022, Publisher LRS leidykla, Genre poezija,
 
