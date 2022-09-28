@@ -48,8 +48,6 @@ public class Book
                 return Genre;
         }
         return Category;
-            
-
-
     }
+
 }

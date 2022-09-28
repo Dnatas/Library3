@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Reflection;
@@ -30,7 +31,8 @@ class Program
     static void Menu(BookList AllBooks)
     {
         string menuAnswer;
-        
+        List<string> fuse;
+
         Console.WriteLine("\nYour number of Choice:\n");
         Console.WriteLine("0 for display list of all books");
         Console.WriteLine("1 for borrow book");
@@ -47,69 +49,18 @@ class Program
                 AllBooks.ListAll();
                 Menu(AllBooks);
                 break;
+
             case "1":
-                ListEmpty(AllBooks, AllBooks.Filter("Status", "Available").Books);
-                Console.WriteLine("\nBooks available:");
-                AllBooks.Filter("Status","Available").ListAll();
-                Console.WriteLine("Choose book by book number");
-                    while (true) {
-                    menuAnswer = Console.ReadLine();
-                    if (AllBooks.Filter("Status", "Available").Books.ElementAtOrDefault(int.Parse(menuAnswer)) != null)
-                    {
-                        Console.WriteLine("Check local delivery for the book:");
-                        Console.WriteLine(AllBooks.Filter("Status", "Available").Books[int.Parse(menuAnswer)].BookDetailBasic());
-                        AllBooks.Filter("Status", "Available").Books[int.Parse(menuAnswer)].ChangeStatus("Borrowed");
-                        Menu(AllBooks);
-                     }
-                    else 
-                    {
-                         Console.WriteLine("That book is not available, please retype");
-                         continue;
-                    }
-                }
-                
+                StatusChange(AllBooks, "Status", "Available","Borrowed");
+                break;
+
             case "2":
-                ListEmpty(AllBooks, AllBooks.Filter("Status", "Borrowed").Books);
-                Console.WriteLine("Which book do you want to return?");
-                AllBooks.Filter("Status", "Borrowed").ListAll();
-                Console.WriteLine("Choose book by book number");
-                while (true)
-                {
-                    menuAnswer = Console.ReadLine();
-                    if (AllBooks.Filter("Status", "Borrowed").Books.ElementAtOrDefault(int.Parse(menuAnswer)) != null)
-                    {
-                        Console.WriteLine("Library Admin will available book on arriving:");
-                        Console.WriteLine(AllBooks.Filter("Status", "Borrowed").Books[int.Parse(menuAnswer)].BookDetailBasic());
-                        AllBooks.Filter("Status", "Borrowed").Books[int.Parse(menuAnswer)].ChangeStatus("Return");
-                        Menu(AllBooks);
-                    }
-                    else
-                    {
-                        Console.WriteLine("That book is not returnable, please retype");
-                        continue;
-                    }
-                }
+                StatusChange(AllBooks, "Status", "Borrowed", "Return");
+                break;
+
             case "3":
-                ListEmpty(AllBooks, AllBooks.Filter("Status", "Available").Books);
-                Console.WriteLine("\nBooks available:");
-                AllBooks.Filter("Status", "Available").ListAll();
-                Console.WriteLine("Choose book by book number");
-                while (true)
-                {
-                    menuAnswer = Console.ReadLine();
-                    if (AllBooks.Filter("Status", "Available").Books.ElementAtOrDefault(int.Parse(menuAnswer)) != null)
-                    {
-                        Console.WriteLine("This book get reserved for you:");
-                        Console.WriteLine(AllBooks.Filter("Status", "Available").Books[int.Parse(menuAnswer)].BookDetailBasic());
-                        AllBooks.Filter("Status", "Available").Books[int.Parse(menuAnswer)].ChangeStatus("Reserved");
-                        Menu(AllBooks);
-                    }
-                    else
-                    {
-                        Console.WriteLine("That book is not available, please retype");
-                        continue;
-                    }
-                }
+                StatusChange(AllBooks, "Status", "Available", "Reserved");
+                break;
 
             case "4":
                 Console.WriteLine("Book search:");
@@ -125,7 +76,7 @@ class Program
                         SearchBook(AllBooks, "Author");
                         break;
                     case "2":
-                        SearchBook(AllBooks,"Isbn");
+                        SearchBook(AllBooks, "Isbn");
                         break;
                     case "3":
                         SearchBook(AllBooks, "Release");
@@ -144,39 +95,20 @@ class Program
                 Console.WriteLine("Welcome back, Admin");
                 Console.WriteLine("type Admin password");
 
-                GetInput(new List<string> { "admin", "Admin"});
+                GetInput(new List<string> { "admin", "Admin" });
 
                 Console.Clear();
                 Console.WriteLine("successfully joined");
+                StatusChange(AllBooks, "Status", "Return", "Available");
 
-                ListEmpty(AllBooks, AllBooks.Filter("Status", "Return").Books);
-
-                Console.WriteLine("\nReturning books arrived:");
-                AllBooks.Filter("Status", "Return").ListAll();
-                Console.WriteLine("Choose book by book number");
-                while (true)
-                {
-                    menuAnswer = (Console.ReadLine());
-
-                    if (AllBooks.Filter("Status", "Return").Books.ElementAtOrDefault(int.Parse(menuAnswer)) !=null)
-                    {
-                        Console.WriteLine("Check local delivery for the book:");
-                        Console.WriteLine(AllBooks.Filter("Status", "Return").Books[int.Parse(menuAnswer)].BookDetailBasic());
-                        AllBooks.Filter("Status", "Return").Books[int.Parse(menuAnswer)].ChangeStatus("Available");
-                        Menu(AllBooks);
-                    }
-                    else
-                    {
-                        Console.WriteLine("That book is not in list, please retype");
-                        continue;
-                    }
-                }
-
+                break;
             case "9":
                 Environment.Exit(0);
                 break;
         }
-        static string GetInput(List<string> Choices)
+    }
+
+    static string GetInput(List<string> Choices)
         {
             while (true)
             {
@@ -187,13 +119,13 @@ class Program
                 }
                 else
                 {
-                    Console.WriteLine("try to retype proper value");
+                    Console.WriteLine("Please input proper value");
                 }
 
             }
         }
 
-    }
+    
     static void ListEmpty(BookList AllBooks,  List<Book> list)
     {
         if (list.Count == 0)
@@ -210,6 +142,26 @@ class Program
         ListEmpty(AllBooks, AllBooks.Filter(Category, answer).Books);
         AllBooks.Filter(Category, answer).ListAll();
         Menu(AllBooks);
+    }
+
+    static void StatusChange(BookList AllBooks, string Category, string Value, string NewValue)
+    {
+        ListEmpty(AllBooks, AllBooks.Filter(Category, Value).Books);
+        Console.WriteLine("\nBooks available:");
+        AllBooks.Filter(Category, Value).ListAll();
+        List<string>fuse = new List<string>();
+        foreach (Book item in AllBooks.Filter(Category, Value).Books)
+        {
+            fuse.Add($"{AllBooks.Filter(Category, Value).Books.IndexOf(item)}");
+        }
+        Console.WriteLine("Choose book by book number");
+        string menuAnswer = GetInput(fuse);
+        //Console.WriteLine("Check local delivery for the book:");
+        Console.WriteLine(AllBooks.Filter(Category, Value).Books[int.Parse(menuAnswer)].BookDetailBasic());
+        AllBooks.Filter(Category, Value).Books[int.Parse(menuAnswer)].ChangeStatus(NewValue);
+        Menu(AllBooks);
+
+
     }
 }
 
