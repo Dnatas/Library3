@@ -42,6 +42,7 @@ class Program
         Console.WriteLine("9 for exit\n");
 
         string choice = GetInput(new List<string>() { "0", "1", "2", "3", "4", "8", "9" });
+
         switch (choice)
         {
             case "0":
@@ -71,6 +72,7 @@ class Program
                 Console.WriteLine("Search by title press 0, by author 1, by ISBN 2");
                 Console.WriteLine("by year of release 3, publisher 4, by genre 5");
                 menuAnswer = GetInput(new List<string> { "0", "1", "2", "3", "4", "5" });
+
                 switch (menuAnswer)
                 {
                     case "0":
@@ -123,7 +125,8 @@ class Program
         {
             while (true)
             {
-                string input = Console.ReadLine();
+                string? input = Console.ReadLine();
+
                 if (Choices.Contains(input))
                 {
                     return input;
@@ -141,15 +144,15 @@ class Program
     {
         if (list.Count == 0)
         {
-        Console.WriteLine("\nThere no book lists to display");
-        BackOrExit(AllBooks);
+            Console.WriteLine("\nThere no book lists to display");
+            BackOrExit(AllBooks);
         }
     }
 
     static void SearchBook(BookList AllBooks, string Category)
     {
         Console.WriteLine($"\nType book {Category}:");
-        string answer = Console.ReadLine();
+        string? answer = Console.ReadLine();
         ListEmpty(AllBooks, AllBooks.Filter(Category, answer).Books);
         AllBooks.Filter(Category, answer).ListAll();
         BackOrExit(AllBooks);
@@ -160,11 +163,14 @@ class Program
         ListEmpty(AllBooks, AllBooks.Filter(Category, Value).Books);
         Console.WriteLine("\nBooks available:");
         AllBooks.Filter(Category, Value).ListAll();
+
         List<string>fuse = new List<string>();
+
         foreach (Book item in AllBooks.Filter(Category, Value).Books)
         {
             fuse.Add($"{AllBooks.Filter(Category, Value).Books.IndexOf(item)}");
         }
+
         Console.WriteLine("Choose book by book number");
         string menuAnswer = GetInput(fuse);
         Console.WriteLine("You choosed the book:");
@@ -177,6 +183,7 @@ class Program
         Console.WriteLine("\nChose next step:");
         Console.WriteLine("0: back to menu\n9: to exit");
         string me = GetInput(new List<string>() { "0", "9" });
+
         switch (me)
         {
             case "0":

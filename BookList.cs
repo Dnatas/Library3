@@ -12,7 +12,7 @@ public class BookList
         }
 
     }
-    public BookList Filter(string Attribute, string Value)
+    public BookList Filter(string Attribute, string? Value)
     {
         BookList Filtered = new BookList() { Books = new List<Book>() };
         switch (Attribute)

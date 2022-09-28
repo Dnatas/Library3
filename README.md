@@ -1,5 +1,5 @@
 # Library3
-
+There 2 passwords for Admin, one is "password".
 Search in program based on details of used books:
 
 Title Epoche, Author Nerijus Cibulskas, Isbn 9786094803345, Release 2022, Publisher LRS leidykla, Genre poezija,
@@ -16,4 +16,4 @@ Title Vieno žmogaus bohema, Author Ugnė Barauskaitė, Isbn 9786094661563, Rele
 
 Title Basic of fluid mechanics, Author Tadas Ždankus, Isbn 9786090211078, Release 2020, Publisher Technologija, Genre fizika,
 
-There 2 passwords for Admin, one is "password".
+
