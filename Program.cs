@@ -21,7 +21,6 @@ class Program
                 new Book() { Title = "Kiborgų žemė", Author = "Dovydas Pancerovas", Isbn = "9786090150894", Release = "2022", Publisher = "Alma littera", Genre = "karo istorija", Status = "Available" },
                 new Book() { Title = "Vieno žmogaus bohema", Author = "Ugnė Barauskaitė", Isbn = "9786094661563", Release = "2016", Publisher = "Tyto alba", Genre = "grožinė literatūra", Status = "Borrowed" },
                 new Book() { Title = "Basics of fluid mechanics", Author = "Tadas Ždankus", Isbn = "9786090217078", Release = "2020", Publisher = "Technologija", Genre = "fizika", Status = "Returning" }
-
             }
         };
         Console.WriteLine("\nWelcome to Console Library\n");
