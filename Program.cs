@@ -20,7 +20,7 @@ class Program
                 new Book() { Title = "Įžymūs lietuviai", Author = "Rokas Subačius", Isbn = "9785417011269", Release = "2022", Publisher = "Mintis", Genre = "biografija", Status = "Available" },
                 new Book() { Title = "Kiborgų žemė", Author = "Dovydas Pancerovas", Isbn = "9786090150894", Release = "2022", Publisher = "Alma littera", Genre = "karo istorija", Status = "Available" },
                 new Book() { Title = "Vieno žmogaus bohema", Author = "Ugnė Barauskaitė", Isbn = "9786094661563", Release = "2016", Publisher = "Tyto alba", Genre = "grožinė literatūra", Status = "Borrowed" },
-                new Book() { Title = "Basic of fluid mechanics", Author = "Tadas Ždankus", Isbn = "9786090211078", Release = "2020", Publisher = "Technologija", Genre = "fizika", Status = "Return" }
+                new Book() { Title = "Basics of fluid mechanics", Author = "Tadas Ždankus", Isbn = "9786090217078", Release = "2020", Publisher = "Technologija", Genre = "fizika", Status = "Returning" }
 
             }
         };
@@ -33,13 +33,13 @@ class Program
         string menuAnswer;
 
         Console.WriteLine("\nYour number of Choice:\n");
-        Console.WriteLine("0 for display list of all books");
-        Console.WriteLine("1 for borrow book");
-        Console.WriteLine("2 for book return");
-        Console.WriteLine("3 for reserve a book");
-        Console.WriteLine("4 for book search");
-        Console.WriteLine("8 for Admin");
-        Console.WriteLine("9 for exit\n");
+        Console.WriteLine("0 to display list of all books");
+        Console.WriteLine("1 to borrow book");
+        Console.WriteLine("2 to book return");
+        Console.WriteLine("3 to reserve a book");
+        Console.WriteLine("4 to book search");
+        Console.WriteLine("8 to Admin");
+        Console.WriteLine("9 to exit\n");
 
         string choice = GetInput(new List<string>() { "0", "1", "2", "3", "4", "8", "9" });
 
@@ -53,23 +53,23 @@ class Program
 
             case "1":
                 Console.Clear();
-                StatusChange(AllBooks, "Status", "Available","Borrowed");
+                StatusChange(AllBooks, "Available","Borrowed");
                 break;
 
             case "2":
                 Console.Clear();
-                StatusChange(AllBooks, "Status", "Borrowed", "Return");
+                StatusChange(AllBooks, "Borrowed", "Returning");
                 break;
 
             case "3":
                 Console.Clear();
-                StatusChange(AllBooks, "Status", "Available", "Reserved");
+                StatusChange(AllBooks, "Available", "Reserved");
                 break;
 
             case "4":
                 Console.Clear();
                 Console.WriteLine("Book search:");
-                Console.WriteLine("Search by title press 0, by author 1, by ISBN 2");
+                Console.WriteLine("To search by title press 0, by author 1, by ISBN 2");
                 Console.WriteLine("by year of release 3, publisher 4, by genre 5");
                 menuAnswer = GetInput(new List<string> { "0", "1", "2", "3", "4", "5" });
 
@@ -105,14 +105,14 @@ class Program
 
             case "8":
                 Console.Clear();
-                Console.WriteLine("Welcome back, Admin");
                 Console.WriteLine("type Admin password");
 
                 GetInput(new List<string> { "admin", "password" });
 
                 Console.Clear();
                 Console.WriteLine("successfully joined");
-                StatusChange(AllBooks, "Status", "Return", "Available");
+                Console.WriteLine("The books that people have returning, and needs to be confirmed available");
+                StatusChange(AllBooks, "Returning", "Available");
 
                 break;
             case "9":
@@ -127,13 +127,13 @@ class Program
             {
                 string? input = Console.ReadLine();
 
-                if (Choices.Contains(input))
+                if (Choices.Contains(input!)) 
                 {
-                    return input;
+                    return input!;
                 }
                 else
                 {
-                    Console.WriteLine("Please type proper value");
+                    Console.WriteLine("Please type valid value");
                 }
 
             }
@@ -144,7 +144,7 @@ class Program
     {
         if (list.Count == 0)
         {
-            Console.WriteLine("\nThere no book lists to display");
+            Console.WriteLine("\nThere no books to display");
             BackOrExit(AllBooks);
         }
     }
@@ -158,33 +158,33 @@ class Program
         BackOrExit(AllBooks);
     }
 
-    static void StatusChange(BookList AllBooks, string Category, string Value, string NewValue)
+    static void StatusChange(BookList AllBooks, string Value, string NewValue)
     {
-        ListEmpty(AllBooks, AllBooks.Filter(Category, Value).Books);
+        ListEmpty(AllBooks, AllBooks.Filter("Status", Value).Books);
         Console.WriteLine("\nBooks available:");
-        AllBooks.Filter(Category, Value).ListAll();
+        AllBooks.Filter("Status", Value).ListAll();
 
         List<string>fuse = new List<string>();
 
-        foreach (Book item in AllBooks.Filter(Category, Value).Books)
+        foreach (Book item in AllBooks.Filter("Status", Value).Books)
         {
-            fuse.Add($"{AllBooks.Filter(Category, Value).Books.IndexOf(item)}");
+            fuse.Add($"{AllBooks.Filter("Status", Value).Books.IndexOf(item)}");
         }
 
         Console.WriteLine("Choose book by book number");
         string menuAnswer = GetInput(fuse);
         Console.WriteLine("You choosed the book:");
-        Console.WriteLine(AllBooks.Filter(Category, Value).Books[int.Parse(menuAnswer)].BookDetailBasic());
-        AllBooks.Filter(Category, Value).Books[int.Parse(menuAnswer)].ChangeStatus(NewValue);
+        Console.WriteLine(AllBooks.Filter("Status", Value).Books[int.Parse(menuAnswer)].BookDetailBasic());
+        AllBooks.Filter("Status", Value).Books[int.Parse(menuAnswer)].ChangeStatus(NewValue);
         BackOrExit(AllBooks);
     }
     static void BackOrExit(BookList AllBooks)
     {
-        Console.WriteLine("\nChose next step:");
-        Console.WriteLine("0: back to menu\n9: to exit");
-        string me = GetInput(new List<string>() { "0", "9" });
+        Console.WriteLine("\nWhat would you like to do next:");
+        Console.WriteLine("0: back to menu\n9: go to exit");
+        string Input = GetInput(new List<string>() { "0", "9" });
 
-        switch (me)
+        switch (Input)
         {
             case "0":
                 Console.Clear();
