@@ -4,18 +4,22 @@
 ##### There 2 passwords for Admin, one is "password".
 ##### Search in program based on details of used books:
 
-Title Epoche, Author Nerijus Cibulskas, Isbn 9786094803345, Release 2022, Publisher LRS leidykla, Genre poezija,
 
-Title Pakėliau Balsą, Author Giedrius Mickūnas, Isbn 9786094462672, Release 2022, Publisher Homo liber, Genre poezija,
+Title | Author | ISBN | Release | Publisher | Genre
+------------- | ------------- | ------------- | ------------- | ------------- | -------------  
 
-Title Laikas išeina pats, Author Stasys Jonauskas, Isbn 9789986398073, Release 2014, Publisher LRS leidykla, Genre poezija,
+Epoche | Nerijus Cibulskas | 9786094803345 | 2022 | LRS leidykla | poezija
 
-Title Įžymūs lietuviai, Author Rokas Subačius, Isbn 9785417011269, Release 2022, Publisher Mintis, Genre biografija,
+Pakėliau Balsą | Giedrius Mickūnas | 9786094462672 | 2022 | Homo liber | poezija
 
-Title Kiborgų žemė, Author Dovydas Pancerovas, Isbn 9786090150894, Release 2022, Publisher Alma littera, Genre karo istorija,
+Laikas išeina pats | Stasys Jonauskas | 9789986398073 | 2014 | LRS leidykla | poezija
 
-Title Vieno žmogaus bohema, Author Ugnė Barauskaitė, Isbn 9786094661563, Release 2016, Publisher Tyto alba, Genre grožinė literatūra,
+Įžymūs lietuviai | Rokas Subačius | 9785417011269 | 2022 | Mintis | biografija
 
-Title Basics of fluid mechanics, Author Tadas Ždankus, Isbn 9786090217078, Release 2020, Publisher Technologija, Genre fizika,
+Kiborgų žemė | Dovydas Pancerovas | 9786090150894 | 2022 | Alma littera | karo istorija
+
+Vieno žmogaus bohema | Ugnė Barauskaitė | 9786094661563 | 2016 | Tyto alba | grožinė literatūra
+
+Basics of fluid mechanics | Tadas Ždankus | 9786090217078 | 2020 | Technologija | fizika
 
 
