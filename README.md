@@ -1,6 +1,7 @@
 # Library3
-**Console app for library, where users can borrow, return, reserve or search books. If joined as Admin
- app let's mark returned books as available for borrowing or reserving.
+**Console app for library, where users can borrow, return, reserve or search books. If joined as Admin 
+app let's mark returned books as available for borrowing or reserving (Admin confirmation is 
+needed to mark books as actually returned).
  There 2 passwords for Admin, one is "password".
  Search in program based on details of used books:**
 
